@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, MapPin, Users, DollarSign, Shield, Globe, Clock } from 'lucide-react';
+import { Search, MapPin, Users, DollarSign, Shield, Globe, Clock, Car, MessageSquare, Star } from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -115,34 +114,100 @@ const Index = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Step 1 */}
               <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                 <div className="w-16 h-16 bg-ride-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Search className="h-8 w-8 text-ride-green-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Search for Rides</h3>
+                <h3 className="text-xl font-semibold mb-3">1. Search for Rides</h3>
                 <p className="text-gray-600">
                   Enter your departure and arrival locations and your travel date to find available rides.
                 </p>
+                <div className="mt-4 space-y-2 text-left">
+                  <div className="flex items-start">
+                    <div className="bg-ride-green-100 rounded-full p-1 mr-2 mt-1">
+                      <MapPin className="h-4 w-4 text-ride-green-600" />
+                    </div>
+                    <p className="text-sm text-gray-500">Specify your exact pickup and drop-off points</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="bg-ride-green-100 rounded-full p-1 mr-2 mt-1">
+                      <Clock className="h-4 w-4 text-ride-green-600" />
+                    </div>
+                    <p className="text-sm text-gray-500">Filter by departure time that works for you</p>
+                  </div>
+                </div>
               </div>
               
+              {/* Step 2 */}
               <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                 <div className="w-16 h-16 bg-ride-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MapPin className="h-8 w-8 text-ride-blue-600" />
+                  <Car className="h-8 w-8 text-ride-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Book Your Seat</h3>
+                <h3 className="text-xl font-semibold mb-3">2. Book Your Seat</h3>
                 <p className="text-gray-600">
                   Choose the ride that works best for you and book your seat in just a few clicks.
                 </p>
+                <div className="mt-4 space-y-2 text-left">
+                  <div className="flex items-start">
+                    <div className="bg-ride-blue-100 rounded-full p-1 mr-2 mt-1">
+                      <Users className="h-4 w-4 text-ride-blue-600" />
+                    </div>
+                    <p className="text-sm text-gray-500">View driver profiles and ratings before booking</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="bg-ride-blue-100 rounded-full p-1 mr-2 mt-1">
+                      <MessageSquare className="h-4 w-4 text-ride-blue-600" />
+                    </div>
+                    <p className="text-sm text-gray-500">Message the driver to confirm details</p>
+                  </div>
+                </div>
               </div>
               
+              {/* Step 3 */}
               <div className="bg-white p-6 rounded-lg shadow-sm text-center">
                 <div className="w-16 h-16 bg-ride-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="h-8 w-8 text-ride-green-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Travel Together</h3>
+                <h3 className="text-xl font-semibold mb-3">3. Travel Together</h3>
                 <p className="text-gray-600">
                   Meet your driver at the agreed pick-up location and enjoy your shared journey.
                 </p>
+                <div className="mt-4 space-y-2 text-left">
+                  <div className="flex items-start">
+                    <div className="bg-ride-green-100 rounded-full p-1 mr-2 mt-1">
+                      <MapPin className="h-4 w-4 text-ride-green-600" />
+                    </div>
+                    <p className="text-sm text-gray-500">Get directions to the exact meeting point</p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="bg-ride-green-100 rounded-full p-1 mr-2 mt-1">
+                      <Star className="h-4 w-4 text-ride-green-600" />
+                    </div>
+                    <p className="text-sm text-gray-500">Rate your experience after the ride</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Additional step - Offering rides */}
+            <div className="mt-12 bg-white p-6 rounded-lg shadow-sm max-w-2xl mx-auto">
+              <h3 className="text-xl font-semibold mb-4 text-center">Want to offer a ride instead?</h3>
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="w-24 h-24 bg-ride-blue-100 rounded-full flex items-center justify-center shrink-0">
+                  <Car className="h-12 w-12 text-ride-blue-600" />
+                </div>
+                <div>
+                  <p className="text-gray-600 mb-4">
+                    If you're driving and have empty seats, you can offer a ride and share your travel costs with passengers heading the same way.
+                  </p>
+                  <Button 
+                    onClick={() => navigate('/offer')} 
+                    className="w-full md:w-auto"
+                  >
+                    Offer a Ride
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
