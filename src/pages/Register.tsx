@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -35,6 +34,11 @@ const Register = () => {
 
   // Driver-specific
   const [name, setName] = useState('');
+  const [carModel, setCarModel] = useState('');
+  const [carPlate, setCarPlate] = useState('');
+  const [acceptSmoking, setAcceptSmoking] = useState(false);
+  const [acceptAnimals, setAcceptAnimals] = useState(false);
+  const [acceptLuggage, setAcceptLuggage] = useState(false);
 
   const handleRoleSelect = (selectedRole: "passenger" | "driver") => {
     setRole(selectedRole);
@@ -47,6 +51,11 @@ const Register = () => {
     setPassword('');
     setConfirmPassword('');
     setPhone('');
+    setCarModel('');
+    setCarPlate('');
+    setAcceptSmoking(false);
+    setAcceptAnimals(false);
+    setAcceptLuggage(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,13 +67,12 @@ const Register = () => {
         return;
       }
       // Password flow for passengers can be added, currently omitted for simplicity
-      // Register passenger with combined name
       const success = await signUp(`${firstName} ${lastName}`, email, 'password123'); // Replace with real password logic
       if (success) {
         navigate('/');
       }
     } else if (role === 'driver') {
-      if (!name || !email || !password || !confirmPassword) {
+      if (!name || !email || !password || !confirmPassword || !carModel || !carPlate) {
         setError('Please fill in all fields');
         return;
       }
@@ -76,9 +84,19 @@ const Register = () => {
         setError('Password must be at least 8 characters');
         return;
       }
-      const success = await signUp(name, email, password);
+      // Preferences can be used as needed
+      const driverData = {
+        name,
+        email,
+        password,
+        carModel,
+        carPlate,
+        acceptSmoking,
+        acceptAnimals,
+        acceptLuggage,
+      };
+      const success = await signUp(name, email, password, driverData);
       if (success) {
-        // After signup, you can add logic to redirect to "Offer a Ride" page for driver setup
         navigate('/');
       }
     }
@@ -213,6 +231,61 @@ const Register = () => {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         disabled={loading}
                       />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="carModel">Car Model</Label>
+                      <Input
+                        id="carModel"
+                        placeholder="Toyota Prius"
+                        value={carModel}
+                        onChange={(e) => setCarModel(e.target.value)}
+                        disabled={loading}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="carPlate">Car Registration Plate</Label>
+                      <Input
+                        id="carPlate"
+                        placeholder="ABC-1234"
+                        value={carPlate}
+                        onChange={(e) => setCarPlate(e.target.value)}
+                        disabled={loading}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Preferences</Label>
+                      <div className="flex gap-4 flex-wrap">
+                        <label className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={acceptSmoking}
+                            onChange={(e) => setAcceptSmoking(e.target.checked)}
+                            disabled={loading}
+                            className="accent-ride-blue-600"
+                          />
+                          Accept smokers
+                        </label>
+                        <label className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={acceptAnimals}
+                            onChange={(e) => setAcceptAnimals(e.target.checked)}
+                            disabled={loading}
+                            className="accent-ride-green-600"
+                          />
+                          Accept animals
+                        </label>
+                        <label className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={acceptLuggage}
+                            onChange={(e) => setAcceptLuggage(e.target.checked)}
+                            disabled={loading}
+                            className="accent-gray-600"
+                          />
+                          Accept luggage
+                        </label>
+                      </div>
                     </div>
                   </>
                 )}
